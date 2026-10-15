@@ -67,10 +67,11 @@ def update_status(task_id, status):
     raise ValueError(f"Task {task_id} not found")
 
 
+
 def summarize_tasks():
     tasks = load_tasks()
 
-    summary = {
+    return {
         "pending": sum(t["status"] == "pending" for t in tasks),
         "completed": sum(t["status"] == "completed" for t in tasks),
         "by_priority": {
@@ -78,6 +79,7 @@ def summarize_tasks():
             for priority in ("low", "medium", "high")
         },
     }
+
 def tasks_by_priority():
     order = {"high": 0, "medium": 1, "low": 2}
     return sorted(

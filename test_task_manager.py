@@ -35,14 +35,25 @@ class TestTaskManager(unittest.TestCase):
         with self.assertRaises(ValueError):
             tm.update_status(999, "completed")
 
+    
     def test_summary(self):
         tm.add_task("Task A", "high")
         tm.add_task("Task B", "low")
         tm.update_status(2, "completed")
+
         self.assertEqual(
             tm.summarize_tasks(),
-            {"pending": 1, "completed": 1},
+            {
+                "pending": 1,
+                "completed": 1,
+                "by_priority": {
+                    "low": 1,
+                    "medium": 0,
+                    "high": 1,
+                },
+            },
         )
+
 
     def test_priority_sorting(self):
         tm.add_task("Low task", "low")
