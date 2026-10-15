@@ -1,0 +1,453 @@
+PS S:\ssl_lab7_q3> git clone https://github.com/octocat/Hello-World.git upstream-inspection
+>> cd upstream-inspection
+Cloning into 'upstream-inspection'...
+remote: Enumerating objects: 13, done.
+remote: Total 13 (delta 0), reused 0 (delta 0), pack-reused 13 (from 1)
+Receiving objects: 100% (13/13), done.
+PS S:\ssl_lab7_q3\upstream-inspection> git rev-parse --is-inside-work-tree
+>> git branch -a
+>> git log -5 --oneline
+>> git log --oneline --graph --decorate -10
+>> git show HEAD
+true
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/origin/octocat-patch-1
+  remotes/origin/test
+7fd1a60 (HEAD -> master, origin/master, origin/HEAD) Merge pull request #6 from Spaceghost/patch-1
+7629413 New line at end of file. --Signed off by Spaceghost
+553c207 first commit
+*   7fd1a60 (HEAD -> master, origin/master, origin/HEAD) Merge pull request #6 from Spaceghost/patch-1
+|\  
+| * 7629413 New line at end of file. --Signed off by Spaceghost
+|/  
+* 553c207 first commit
+commit 7fd1a60b01f91b314f59955a4e4d4e80d8edf11d (HEAD -> master, origin/master, origin/HEAD)
+Merge: 553c207 7629413
+Author: The Octocat <octocat@nowhere.com>
+Date:   Tue Mar 6 15:06:50 2012 -0800
+
+    Merge pull request #6 from Spaceghost/patch-1
+    
+    New line at end of file.
+
+PS S:\ssl_lab7_q3\upstream-inspection> git branch --show-current
+>> git rev-parse HEAD
+>> git status
+master
+7fd1a60b01f91b314f59955a4e4d4e80d8edf11d
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+PS S:\ssl_lab7_q3\upstream-inspection> cd ..
+>> mkdir task-manager
+>> cd task-manager
+>> git init
+
+
+    Directory: S:\ssl_lab7_q3
+
+
+Mode                 LastWriteTime         Length Name                                                               
+----                 -------------         ------ ----                                                               
+d-----        15-10-2026     10:47                task-manager                                                       
+Initialized empty Git repository in S:/ssl_lab7_q3/task-manager/.git/
+                                python -m unittest -v
+>> git add .
+>> git commit -m "Initial task manager with CSV storage"
+test_add_and_list (test_task_manager.TestTaskManager.test_add_and_list) ... ok
+test_invalid_priority (test_task_manager.TestTaskManager.test_invalid_priority) ... ok
+test_missing_task (test_task_manager.TestTaskManager.test_missing_task) ... ok
+test_summary (test_task_manager.TestTaskManager.test_summary) ... ok
+test_update_status (test_task_manager.TestTaskManager.test_update_status) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.061s
+
+OK
+[master (root-commit) a40bb4b] Initial task manager with CSV storage
+ 5 files changed, 156 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 READEME.md
+ create mode 100644 task_manager.py
+ create mode 100644 tasks.csv
+ create mode 100644 test_task_manager.py
+PS S:\ssl_lab7_q3\task-manager> git branch feature-priority
+>> git switch feature-priority
+Switched to branch 'feature-priority'
+PS S:\ssl_lab7_q3\task-manager> python -m unittest -v
+>> git add task_manager.py test_task_manager.py
+>> git commit -m "Add priority-based task sorting"
+test_add_and_list (test_task_manager.TestTaskManager.test_add_and_list) ... ok
+test_invalid_priority (test_task_manager.TestTaskManager.test_invalid_priority) ... ok
+test_missing_task (test_task_manager.TestTaskManager.test_missing_task) ... ok
+test_priority_sorting (test_task_manager.TestTaskManager.test_priority_sorting) ... ok
+test_summary (test_task_manager.TestTaskManager.test_summary) ... ok
+test_update_status (test_task_manager.TestTaskManager.test_update_status) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.015s
+
+OK
+[feature-priority e578110] Add priority-based task sorting
+ 2 files changed, 8 insertions(+)
+PS S:\ssl_lab7_q3\task-manager> git switch master
+>> git branch feature-summary
+>> git switch feature-summary
+Switched to branch 'master'
+Switched to branch 'feature-summary'
+PS S:\ssl_lab7_q3\task-manager> python -m unittest -v
+>> git add task_manager.py
+>> git commit -m "Add priority counts to task summary"
+test_add_and_list (test_task_manager.TestTaskManager.test_add_and_list) ... ok
+test_invalid_priority (test_task_manager.TestTaskManager.test_invalid_priority) ... ok
+test_missing_task (test_task_manager.TestTaskManager.test_missing_task) ... ok
+test_summary (test_task_manager.TestTaskManager.test_summary) ... FAIL
+test_update_status (test_task_manager.TestTaskManager.test_update_status) ... ok
+
+======================================================================
+FAIL: test_summary (test_task_manager.TestTaskManager.test_summary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "S:\ssl_lab7_q3\task-manager\test_task_manager.py", line 42, in test_summary
+    self.assertEqual(
+AssertionError: {'pen[13 chars]mpleted': 1, 'by_priority': {'low': 1, 'medium': 0, 'high': 1}} != {'pen[13 chars]mpleted': 1}
++ {'completed': 1, 'pending': 1}
+- {'by_priority': {'high': 1, 'low': 1, 'medium': 0},
+-  'completed': 1,
+-  'pending': 1}
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.015s
+
+FAILED (failures=1)
+[feature-summary 32daaf0] Add priority counts to task summary
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+PS S:\ssl_lab7_q3\task-manager> git switch master
+>> git merge feature-priority
+>> git merge feature-summary
+Switched to branch 'master'
+Updating a40bb4b..e578110
+Fast-forward
+ task_manager.py      | 3 +++
+ test_task_manager.py | 5 +++++
+ 2 files changed, 8 insertions(+)
+Auto-merging task_manager.py
+CONFLICT (content): Merge conflict in task_manager.py
+Automatic merge failed; fix confgit add task_manager.pyhe result.
+>> git commit -m "Merge priority and summary features"
+[master 79029fc] Merge priority and summary features
+PS S:\ssl_lab7_q3\task-manager> python -m unittest -v
+>> python task_manager.py
+test_add_and_list (test_task_manager.TestTaskManager.test_add_and_list) ... ok
+test_invalid_priority (test_task_manager.TestTaskManager.test_invalid_priority) ... ok
+test_missing_task (test_task_manager.TestTaskManager.test_missing_task) ... ok
+test_priority_sorting (test_task_manager.TestTaskManager.test_priority_sorting) ... ok
+test_summary (test_task_manager.TestTaskManager.test_summary) ... FAIL
+test_update_status (test_task_manager.TestTaskManager.test_update_status) ... ok
+
+======================================================================
+FAIL: test_summary (test_task_manager.TestTaskManager.test_summary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "S:\ssl_lab7_q3\task-manager\test_task_manager.py", line 42, in test_summary
+    self.assertEqual(
+AssertionError: None != {'pending': 1, 'completed': 1}
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.023s
+
+FAILED (failures=1)
+Task Manager
+Tasks: [{'task_id': '1', 'description': 'Complete Git lab', 'priority': 'high', 'status': 'pending'}, {'task_id': '2', 'description': 'Study Python', 'priority': 'medium', 'status': 'pending'}, {'task_id': '3', 'description': 'Read documentation', 'priority': 'low', 'status': 'completed'}]
+Summary: None
+PS S:\ssl_lab7_q3\task-manager> python -m unittest -v
+>> python task_manager.py
+test_add_and_list (test_task_manager.TestTaskManager.test_add_and_list) ... ok
+test_invalid_priority (test_task_manager.TestTaskManager.test_invalid_priority) ... ok
+test_missing_task (test_task_manager.TestTaskManager.test_missing_task) ... ok
+test_priority_sorting (test_task_manager.TestTaskManager.test_priority_sorting) ... ok
+test_summary (test_task_manager.TestTaskManager.test_summary) ... ok
+test_update_status (test_task_manager.TestTaskManager.test_update_status) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.017s
+
+OK
+Task Manager
+Tasks: [{'task_id': '1', 'description': 'Complete Git lab', 'priority': 'high', 'status': 'pending'}, {'task_id': '2', 'description': 'Study Python', 'priority': 'medium', 'status': 'pending'}, {'task_id': '3', 'description': 'Read documentation', 'priority': 'low', 'status': 'completed'}]
+Summary: {'pending': 2, 'completed': 1, 'by_priority': {'low': 1, 'medium': 1, 'high': 1}}
+PS S:\ssl_lab7_q3\task-manager> git add task_manager.py test_task_manager.py
+>> git commit -m "Fix task summary and update tests"
+[master 55d020a] Fix task summary and update tests
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+PS S:\ssl_lab7_q3\task-manager> git tag -a v1.0 -m "Completed task manager version 1.0"
+>> git show v1.0
+>> git log --oneline --graph --decorate --all
+>> git status
+tag v1.0
+Tagger: shravan6926 <shravanpawar050407@gmail.com>
+Date:   Thu Oct 15 11:03:15 2026 +0530
+
+Completed task manager version 1.0
+
+commit 55d020a2fc313327fbeb5ac7b92417b09af15c17 (HEAD -> master, tag: v1.0)
+Author: shravan6926 <shravanpawar050407@gmail.com>
+Date:   Thu Oct 15 11:03:04 2026 +0530
+
+:
+tag v1.0
+Tagger: shravan6926 <shravanpawar050407@gmail.com>
+Date:   Thu Oct 15 11:03:15 2026 +0530
+
+Completed task manager version 1.0
+
+commit 55d020a2fc313327fbeb5ac7b92417b09af15c17 (HEAD -> master, tag: v1.0)
+Author: shravan6926 <shravanpawar050407@gmail.com>
+Date:   Thu Oct 15 11:03:04 2026 +0530
+
+* 55d020a (HEAD -> master, tag: v1.0) Fix task summary and update tests
+*   79029fc Merge priority and summary features
+|\  
+| * 32daaf0 (feature-summary) Add priority counts to task summary
+* | e578110 (feature-priority) Add priority-based task sorting
+|/  
+* a40bb4b Initial task manager with CSV storage
+On branch master
+nothing to commit, working tree clean
+PS S:\ssl_lab7_q3\task-manager> python -m unittest -v
+test_add_and_list (test_task_manager.TestTaskManager.test_add_and_list) ... ok
+test_invalid_priority (test_task_manager.TestTaskManager.test_invalid_priority) ... ok
+test_missing_task (test_task_manager.TestTaskManager.test_missing_task) ... ok
+test_priority_sorting (test_task_manager.TestTaskManager.test_priority_sorting) ... ok
+test_summary (test_task_manager.TestTaskManager.test_summary) ... ok
+test_update_status (test_task_manager.TestTaskManager.test_update_status) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.028s
+
+OK
+PS S:\ssl_lab7_q3\task-manager> git --no-pager log --oneline --graph --decorate --all
+* 55d020a (HEAD -> master, tag: v1.0) Fix task summary and update tests
+*   79029fc Merge priority and summary features
+|\  
+| * 32daaf0 (feature-summary) Add priority counts to task summary
+* | e578110 (feature-priority) Add priority-based task sorting
+|/  
+* a40bb4b Initial task manager with CSV storage
+PS S:\ssl_lab7_q3\task-manager> git --no-pager log --oneline --graph --decorate --all
+* 55d020a (HEAD -> master, tag: v1.0) Fix task summary and update tests
+*   79029fc Merge priority and summary features
+|\  
+| * 32daaf0 (feature-summary) Add priority counts to task summary
+* | e578110 (feature-priority) Add priority-based task sorting
+|/  
+* a40bb4b Initial task manager with CSV storage
+PS S:\ssl_lab7_q3\task-manager> git branch
+  feature-priority
+  feature-summary
+* master
+PS S:\ssl_lab7_q3\task-manager> git status
+On branch master
+nothing to commit, working tree python -m unittest -v
+>> python task_manager.pynager> git tag
+>> git add README.md .gitignore
+>> git commit -m "Update README and ignore temporary files"
+test_add_and_list (test_task_manager.TestTaskManager.test_add_and_list) ... ok
+test_invalid_priority (test_task_manager.TestTaskManager.test_invalid_priority) ... ok
+test_missing_task (test_task_manager.TestTaskManager.test_missing_task) ... ok
+test_priority_sorting (test_task_manager.TestTaskManager.test_priority_sorting) ... ok
+test_summary (test_task_manager.TestTaskManager.test_summary) ... ok
+test_update_status (test_task_manager.TestTaskManager.test_update_status) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.058s
+
+OK
+Task Manager
+Tasks: [{'task_id': '1', 'description': 'Complete Git lab', 'priority': 'high', 'status': 'pending'}, {'task_id': '2', 'description': 'Study Python', 'priority': 'medium', 'status': 'pending'}, {'task_id': '3', 'description': 'Read documentation', 'priority': 'low', 'status': 'completed'}]
+Summary: {'pending': 2, 'completed': 1, 'by_priority': {'low': 1, 'medium': 1, 'high': 1}}
+fatal: pathspec 'README.md' did not match any files
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   READEME.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS S:\ssl_lab7_q3\task-manager> git add README.md .gitignore
+>> git commit -m "Update README and ignore temporary files"
+[master c1bfdd0] Update README and ignore temporary files
+ 1 file changed, 41 insertions(+)
+ create mode 100644 README.md
+PS S:\ssl_lab7_q3\task-manager> git tag -d v1.0
+>> git tag -a v1.0 -m "Completed task manager version 1.0"
+Deleted tag 'v1.0' (was a577fe4)
+PS S:\ssl_lab7_q3\task-manager> git show v1.0
+>> git --no-pager log --oneline --graph --decorate --all
+>> git status
+>> git branch
+tag v1.0
+Tagger: shravan6926 <shravanpawar050407@gmail.com>
+Date:   Thu Oct 15 11:07:57 2026 +0530
+
+Completed task manager version 1.0
+
+commit c1bfdd0f8d117f6068ee4fa5731e40fe1a8a7940 (HEAD -> master, tag: v1.0)
+Author: shravan6926 <shravanpawar050407@gmail.com>
+Date:   Thu Oct 15 11:07:49 2026 +0530
+
+* c1bfdd0 (HEAD -> master, tag: v1.0) Update README and ignore temporary files
+* 55d020a Fix task summary and update tests
+*   79029fc Merge priority and summary features
+|\  
+| * 32daaf0 (feature-summary) Add priority counts to task summary
+* | e578110 (feature-priority) Add priority-based task sorting
+|/  
+* a40bb4b Initial task manager with CSV storage
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    READEME.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+  feature-priority
+  feature-summary
+* master
+PS S:\ssl_lab7_q3\task-manager> git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    READEME.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS S:\ssl_lab7_q3\task-manager> dir *README*
+
+
+    Directory: S:\ssl_lab7_q3\task-manager
+
+
+Mode                 LastWriteTime         Length Name                                                                                                         
+----                 -------------         ------ ----                                                                                                         
+-a----        15-10-2026     11:05            929 README.md                                                                                                    
+
+
+PS S:\ssl_lab7_q3\task-manager> git add -A
+>> git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    READEME.md
+
+PS S:\ssl_lab7_q3\task-manager> git commit -m "Correct README filename"
+[master 7d7cdb0] Correct README filename
+ 1 file changed, 15 deletions(-)
+ delete mode 100644 READEME.md
+PS S:\ssl_lab7_q3\task-manager> git status
+On branch master
+nothing to commit, working tree clean
+PS S:\ssl_lab7_q3\task-manager> python -m unittest -v
+test_add_and_list (test_task_manager.TestTaskManager.test_add_and_list) ... ok
+test_invalid_priority (test_task_manager.TestTaskManager.test_invalid_priority) ... ok
+test_missing_task (test_task_manager.TestTaskManager.test_missing_task) ... ok
+test_priority_sorting (test_task_manager.TestTaskManager.test_priority_sorting) ... ok
+test_summary (test_task_manager.TestTaskManager.test_summary) ... ok
+test_update_status (test_task_manager.TestTaskManager.test_update_status) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.014s
+
+OK
+PS S:\ssl_lab7_q3\task-manager> git --no-pager log --oneline --graph --decorate --all
+* 7d7cdb0 (HEAD -> master) Correct README filename
+* c1bfdd0 (tag: v1.0) Update README and ignore temporary files
+* 55d020a Fix task summary and update tests
+*   79029fc Merge priority and summary features
+|\  
+| * 32daaf0 (feature-summary) Add priority counts to task summary
+* | e578110 (feature-priority) Add priority-based task sorting
+|/  
+* a40bb4b Initial task manager with CSV storage
+PS S:\ssl_lab7_q3\task-manager> git branch
+>> git tag
+>> git show v1.0
+  feature-priority
+  feature-summary
+* master
+v1.0
+tag v1.0
+Tagger: shravan6926 <shravanpawar050407@gmail.com>
+Date:   Thu Oct 15 11:07:57 2026 +0530
+
+Completed task manager version 1.0
+
+commit c1bfdd0f8d117f6068ee4fa5731e40fe1a8a7940 (tag: v1.0)
+Author: shravan6926 <shravanpawar050407@gmail.com>
+Date:   Thu Oct 15 11:07:49 2026 +0530
+
+PS S:\ssl_lab7_q3\task-manager> git status
+On branch master
+nothing to commit, working tree clean
+PS S:\ssl_lab7_q3\task-manager> gh repo create ssl_lab7_q3_mc25bt023 --public --source=. --remote=origin
+✓ Created repository the-shravan-6926/ssl_lab7_q3_mc25bt023 on github.com
+  https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023
+✓ Added remote https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023.git
+PS S:\ssl_lab7_q3\task-manager> git branch --show-current
+master
+PS S:\ssl_lab7_q3\task-manager> git push -u origin master
+Enumerating objects: 26, done.
+Counting objects: 100% (26/26), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (25/25), done.
+Writing objects: 100% (26/26), 4.11 KiB | 2.06 MiB/s, done.
+Total 26 (delta 13), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (13/13), done.
+To https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023.git
+ * [new branch]      master -> master
+branch 'master' set up to track 'origin/master'.
+PS S:\ssl_lab7_q3\task-manager> git push -u origin feature-priority
+>> git push -u origin feature-summary
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote:
+remote: Create a pull request for 'feature-priority' on GitHub by visiting:
+remote:      https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023/pull/new/feature-priority
+remote: 
+To https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023.git
+ * [new branch]      feature-priority -> feature-priority
+branch 'feature-priority' set up to track 'origin/feature-priority'.
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: 
+remote: Create a pull request for 'feature-summary' on GitHub by visiting:
+remote:      https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023/pull/new/feature-summary
+remote: 
+To https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023.git
+ * [new branch]      feature-summary -> feature-summary
+branch 'feature-summary' set up to track 'origin/feature-summary'.
+PS S:\ssl_lab7_q3\task-manager> git push origin v1.0
+Enumerating objects: 1, done.
+Counting objects: 100% (1/1), done.
+Writing objects: 100% (1/1), 181 bytes | 181.00 KiB/s, done.
+Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023.git
+ * [new tag]         v1.0 -> v1.0
+PS S:\ssl_lab7_q3\task-manager> git remote -v
+>> git branch -a
+>> git tag
+>> git status
+origin  https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023.git (fetch)
+origin  https://github.com/the-shravan-6926/ssl_lab7_q3_mc25bt023.git (push)
+  feature-priority
+  feature-summary
+* master
+  remotes/origin/feature-priority
+  remotes/origin/feature-summary
+  remotes/origin/master
+v1.0
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
