@@ -1,0 +1,4 @@
+task_id,description,priority,status
+1,Complete Git lab,high,pending
+2,Study Python,medium,pending
+3,Read documentation,low,completed
