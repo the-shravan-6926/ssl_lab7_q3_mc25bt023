@@ -44,6 +44,11 @@ class TestTaskManager(unittest.TestCase):
             {"pending": 1, "completed": 1},
         )
 
+    def test_priority_sorting(self):
+        tm.add_task("Low task", "low")
+        tm.add_task("High task", "high")
+        tasks = tm.tasks_by_priority()
+        self.assertEqual(tasks[0]["priority"], "high")
 
 if __name__ == "__main__":
     unittest.main()

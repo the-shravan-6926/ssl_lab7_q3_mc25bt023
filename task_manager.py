@@ -75,6 +75,9 @@ def summarize_tasks():
     }
     return summary
 
+def tasks_by_priority():
+    order = {"high": 0, "medium": 1, "low": 2}
+    return sorted(load_tasks(), key=lambda task: order[task["priority"]])
 
 if __name__ == "__main__":
     initialize_csv()
