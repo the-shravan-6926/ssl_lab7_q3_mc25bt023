@@ -69,15 +69,21 @@ def update_status(task_id, status):
 
 def summarize_tasks():
     tasks = load_tasks()
+
     summary = {
         "pending": sum(t["status"] == "pending" for t in tasks),
         "completed": sum(t["status"] == "completed" for t in tasks),
+        "by_priority": {
+            priority: sum(t["priority"] == priority for t in tasks)
+            for priority in ("low", "medium", "high")
+        },
     }
-    return summary
-
 def tasks_by_priority():
     order = {"high": 0, "medium": 1, "low": 2}
-    return sorted(load_tasks(), key=lambda task: order[task["priority"]])
+    return sorted(
+        load_tasks(),
+        key=lambda task: order[task["priority"]]
+    )
 
 if __name__ == "__main__":
     initialize_csv()
